@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+  Home - {{ super() }}
+{% endblock %}
+
+{% block app_content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <h1>{{ title }}</h1>
+        {{ wtf.quick_form(form) }}
+      </div>
+      <div class="to-show">
+        {% if data|length != 0 %}
+          {% for image in data.photos.photo %}
+            {% if loop.index == 0 or loop.index % 3 == 1 %}
+              <div class="row">
+            {% endif %}
+            <div class="col-md-4">
+              <div class="card">
+                <a href="https://farm{{ image.farm }}.staticflickr.com/{{ image.server }}/{{ image.id }}_{{ image.secret }}.jpg" target="_blank">
+                  <img src="https://farm{{ image.farm }}.staticflickr.com/{{ image.server }}/{{ image.id }}_{{ image.secret }}.jpg" alt="Image">
+                </a>
+              </div>
+            </div>
+            {% if loop.index % 3 == 0 or loop.length == loop.index %}
+              </div><!-- ends row for card -->
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+{% endblock %}
